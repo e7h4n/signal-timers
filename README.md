@@ -1,6 +1,12 @@
 # AbortSignal Enhanced Timers Library
 
-[![CI](https://github.com/e7h4n/signal-timers/actions/workflows/ci.yaml/badge.svg)](https://github.com/e7h4n/signal-timers/actions/workflows/ci.yaml) [![Coverage Status](https://coveralls.io/repos/github/e7h4n/signal-timers/badge.svg?branch=main)](https://coveralls.io/github/e7h4n/signal-timers?branch=main) ![NPM Version](https://img.shields.io/npm/v/signal-timers) [![Maintainability](https://api.codeclimate.com/v1/badges/a0b68839fea9c990a3eb/maintainability)](https://codeclimate.com/github/e7h4n/signal-timers/maintainability)
+![NPM Type Definitions](https://img.shields.io/npm/types/signal-timers)
+![NPM Version](https://img.shields.io/npm/v/signal-timers)
+![npm package minimized gzipped size](https://img.shields.io/bundlejs/size/signal-timers)
+[![CI](https://github.com/e7h4n/signal-timers/actions/workflows/ci.yaml/badge.svg)](https://github.com/e7h4n/signal-timers/actions/workflows/ci.yaml)
+[![Coverage Status](https://coveralls.io/repos/github/e7h4n/signal-timers/badge.svg?branch=main)](https://coveralls.io/github/e7h4n/signal-timers?branch=main)
+[![Maintainability](https://api.codeclimate.com/v1/badges/a0b68839fea9c990a3eb/maintainability)](https://codeclimate.com/github/e7h4n/signal-timers/maintainability)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A TypeScript library that provides enhanced timer functions with AbortSignal support, allowing for more flexible asynchronous operations.
 
