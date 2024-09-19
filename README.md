@@ -6,9 +6,7 @@ A TypeScript library that provides enhanced timer functions with AbortSignal sup
 
 ## Features
 
-- **Signal Aware Interval**: Repeatedly execute a callback at specified intervals until an AbortSignal is aborted.
-- **Signal Aware Timeout**: Delay the execution of a callback until either the specified time has elapsed or the AbortSignal is triggered. If the AbortSignal is not triggered, the callback will execute after the delay.
-- **Signal Aware Delay**: Create a promise that resolves after a specified time or rejects when an AbortSignal is aborted.
+This open-source library offers signal-aware control for timing functions. It allows you to execute callbacks at regular intervals, delay their execution, or create promises that resolve after a set time. All actions can be interrupted by an AbortSignal, providing flexible and responsive time management in your code.
 
 ## Installation
 
