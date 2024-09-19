@@ -8,7 +8,6 @@ export default tseslint.config(
             ...tseslint.configs.strictTypeChecked,
             ...tseslint.configs.stylisticTypeChecked,
         ],
-        ignores: ['dist/**'],
         files: ['**/*.ts'],
         languageOptions: {
             globals: globals.browser,
@@ -26,5 +25,8 @@ export default tseslint.config(
         rules: {
             ...vitest.configs.recommended.rules,
         }
+    },
+    {
+        ignores: ['dist/'],
     }
 );
