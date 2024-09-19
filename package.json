@@ -2,7 +2,10 @@
   "name": "signal-timers",
   "version": "1.0.1",
   "description": "This package provides a set of timer-related methods, enhancing `setTimeout` and `setInterval` with support for `AbortSignal`.",
-  "repository": "https://github.com/e7h4n/signal-timers",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/e7h4n/signal-timers.git"
+  },
   "license": "MIT",
   "keywords": [
     "setTimeout",
