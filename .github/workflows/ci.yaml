@@ -29,3 +29,10 @@ jobs:
 
             - name: "Report Coverage"
               uses: davelosert/vitest-coverage-report-action@v2
+
+            - name: Coveralls
+              uses: coverallsapp/github-action@v2
+              with:
+                  file: coverage/cobertura-coverage.xml
+                  format: cobertura
+                  fail-on-error: true

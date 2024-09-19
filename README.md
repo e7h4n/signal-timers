@@ -1,5 +1,7 @@
 # AbortSignal Enhanced Timers Library
 
+[![Coverage Status](https://coveralls.io/repos/github/e7h4n/signal-timers/badge.svg?branch=coveralls)](https://coveralls.io/github/e7h4n/signal-timers?branch=coveralls) ![NPM Version](https://img.shields.io/npm/v/signal-timers)
+
 A TypeScript library that provides enhanced timer functions with AbortSignal support, allowing for more flexible asynchronous operations.
 
 ## Features
