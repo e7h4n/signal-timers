@@ -8,6 +8,10 @@ jobs:
     ci:
         runs-on: ubuntu-latest
 
+        permissions:
+            contents: read
+            pull-requests: write
+
         steps:
             - uses: actions/checkout@v4
 
@@ -21,4 +25,7 @@ jobs:
               run: pnpm lint
 
             - name: Run tests
-              run: pnpm test
+              run: pnpm coverage
+
+            - name: "Report Coverage"
+              uses: davelosert/vitest-coverage-report-action@v2
