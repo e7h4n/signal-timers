@@ -8,7 +8,7 @@ export default tseslint.config(
             ...tseslint.configs.strictTypeChecked,
             ...tseslint.configs.stylisticTypeChecked,
         ],
-        ignores: ['**/dist/**'],
+        ignores: ['dist/**'],
         files: ['**/*.ts'],
         languageOptions: {
             globals: globals.browser,
@@ -19,7 +19,7 @@ export default tseslint.config(
         }
     },
     {
-        files: ['**/*.{spec,test}.{ts,tsx}'],
+        files: ['**/*.test.ts'],
         plugins: {
             vitest,
         },

@@ -68,9 +68,15 @@ export function timeout(callback: Parameters<typeof setTimeout>[0], ms: Paramete
         clearTimeout(timer)
     }
 
-    const timer = setTimeout(function (...args) {
+    const timer = setTimeout(function (...args: unknown[]) {
         options?.signal?.removeEventListener('abort', onAbort)
-        callback(...args)
+
+        if (callback instanceof Function) {
+            callback(...args)
+        } else {
+            // eslint-disable-next-line @typescript-eslint/no-implied-eval
+            new Function(callback)(...args)
+        }
     }, ms);
 
     options?.signal?.addEventListener('abort', onAbort)

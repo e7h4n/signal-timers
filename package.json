@@ -22,6 +22,7 @@
     "node": ">=10"
   },
   "devDependencies": {
+    "@types/node": "^22.5.5",
     "eslint": "^9.10.0",
     "eslint-plugin-vitest": "^0.5.4",
     "globals": "^15.9.0",
