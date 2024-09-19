@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-invalid-void-type */
 class AbortError extends Error {
     constructor(message?: string) {
         super(message)
@@ -25,10 +26,10 @@ interface TimerOptions {
  * const callback = () => {
  *   console.log('Interval callback');
  * };
- * 
+ *
  * const controller = new AbortController();
  * interval(callback, 1000, { signal: controller.signal });
- * 
+ *
  * // To abort the interval
  * controller.abort();
  * ```
@@ -37,7 +38,7 @@ interface TimerOptions {
  * @param ms The interval time in milliseconds.
  * @param options An optional AbortSignal to abort the interval.
  */
-export function interval(callback: Parameters<typeof setInterval>[0], ms: Parameters<typeof setInterval>[1], options?: TimerOptions) {
+export function interval(callback: (args: void) => void, ms?: number, options?: TimerOptions) {
     options?.signal?.throwIfAborted()
 
     const timer = setInterval(callback, ms);
@@ -52,7 +53,7 @@ export function interval(callback: Parameters<typeof setInterval>[0], ms: Parame
  * timeout(() => {
  *   console.log('Timeout callback');
  * }, 5000, { signal: controller.signal });
- * 
+ *
  * // To abort the timeout
  * controller.abort();
  * ```
@@ -61,7 +62,7 @@ export function interval(callback: Parameters<typeof setInterval>[0], ms: Parame
  * @param ms The timeout duration in milliseconds.
  * @param options An optional AbortSignal to abort the timeout.
  */
-export function timeout(callback: Parameters<typeof setTimeout>[0], ms: Parameters<typeof setTimeout>[1], options?: TimerOptions) {
+export function timeout(callback: (args: void) => void, ms?: number, options?: TimerOptions) {
     options?.signal?.throwIfAborted()
 
     function onAbort() {
@@ -72,7 +73,8 @@ export function timeout(callback: Parameters<typeof setTimeout>[0], ms: Paramete
         options?.signal?.removeEventListener('abort', onAbort)
 
         if (callback instanceof Function) {
-            callback(...args)
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-call
+            (callback as any)(...args)
         } else {
             // eslint-disable-next-line @typescript-eslint/no-implied-eval
             new Function(callback)(...args)
@@ -87,7 +89,7 @@ export function timeout(callback: Parameters<typeof setTimeout>[0], ms: Paramete
  *
  * ```typescript
  * await delay(5000, { signal: AbortSignal.timeout(1000) })
- * 
+ *
  * // This line of code will not execute; the preceding line will be rejected after 1000ms, throwing an AbortError.
  * ```
  *
@@ -111,7 +113,7 @@ export function delay(ms: number, options?: TimerOptions): Promise<void> {
  * animationFrame(() => {
  *   console.log('animation callback');
  * }, { signal: controller.signal });
- * 
+ *
  * // To abort the timeout
  * controller.abort();
  * ```
@@ -119,7 +121,7 @@ export function delay(ms: number, options?: TimerOptions): Promise<void> {
  * @param callback The callback function to execute in next animation frame.
  * @param options An optional AbortSignal to abort the animation frame callback.
  */
-export function animationFrame(callback: Parameters<typeof requestAnimationFrame>[0], options?: TimerOptions) {
+export function animationFrame(callback: FrameRequestCallback, options?: TimerOptions) {
     options?.signal?.throwIfAborted()
 
     function onAbort() {
