@@ -1,6 +1,6 @@
 {
   "name": "signal-timers",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "This package provides a set of timer-related methods, enhancing `setTimeout` and `setInterval` with support for `AbortSignal`.",
   "repository": {
     "type": "git",
@@ -47,5 +47,10 @@
     "dist"
   ],
   "main": "./dist/signal-timers.cjs",
-  "module": "./dist/signal-timers.js"
+  "exports": {
+    ".": {
+      "require": "./dist/signal-timers.cjs",
+      "import": "./dist/signal-timers.js"
+    }
+  }
 }

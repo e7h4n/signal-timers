@@ -12,6 +12,9 @@ const pkg = JSON.parse(
     fs.readFileSync("./package.json", { encoding: "utf-8" }),
 );
 
+const targetCJS = pkg.exports["."].require
+const targetES = pkg.exports["."].import
+
 /** @type { import('rollup').RollupOptions } */
 const commonConfig = {
     input: "./src/index.ts",
@@ -30,10 +33,10 @@ const dtsConfig = {
     ],
     output: [
         {
-            file: pkg.main.replace(/\.cjs$/, ".d.cts"),
+            file: targetCJS.replace(/\.cjs$/, ".d.cts"),
         },
         {
-            file: pkg.module.replace(/\.js$/, ".d.ts"),
+            file: targetES.replace(/\.js$/, ".d.ts"),
         },
     ],
 }
@@ -50,11 +53,11 @@ const sourceConfig = {
     ],
     output: [
         {
-            file: pkg.main,
+            file: targetCJS,
             format: "cjs",
         },
         {
-            file: pkg.module,
+            file: targetES,
             format: "es",
         },
     ],
