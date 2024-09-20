@@ -35,9 +35,6 @@ importers:
       eslint-plugin-vitest:
         specifier: ^0.5.4
         version: 0.5.4(eslint@9.10.0(jiti@1.21.6))(typescript@5.6.2)(vitest@2.1.1(@types/node@22.5.5)(happy-dom@15.7.4))
-      globals:
-        specifier: ^15.9.0
-        version: 15.9.0
       happy-dom:
         specifier: ^15.7.4
         version: 15.7.4
@@ -53,9 +50,6 @@ importers:
       typescript-eslint:
         specifier: ^8.6.0
         version: 8.6.0(eslint@9.10.0(jiti@1.21.6))(typescript@5.6.2)
-      vite:
-        specifier: ^5.4.6
-        version: 5.4.6(@types/node@22.5.5)
       vitest:
         specifier: ^2.1.1
         version: 2.1.1(@types/node@22.5.5)(happy-dom@15.7.4)
@@ -1453,10 +1447,6 @@ packages:
 
   globals@14.0.0:
     resolution: {integrity: sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==}
-    engines: {node: '>=18'}
-
-  globals@15.9.0:
-    resolution: {integrity: sha512-SmSKyLLKFbSr6rptvP8izbyxJL4ILwqO9Jg23UA0sDlGlu58V59D1//I3vlc0KJphVdUR7vMjHIplYnzBxorQA==}
     engines: {node: '>=18'}
 
   globby@11.1.0:
@@ -3586,8 +3576,6 @@ snapshots:
   globals@11.12.0: {}
 
   globals@14.0.0: {}
-
-  globals@15.9.0: {}
 
   globby@11.1.0:
     dependencies:

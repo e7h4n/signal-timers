@@ -1,6 +1,5 @@
 import tseslint from 'typescript-eslint';
 import vitest from 'eslint-plugin-vitest';
-import globals from 'globals';
 
 export default tseslint.config(
     {
@@ -10,7 +9,6 @@ export default tseslint.config(
         ],
         files: ['**/*.ts'],
         languageOptions: {
-            globals: globals.browser,
             parserOptions: {
                 projectService: true,
                 tsconfigRootDir: import.meta.dirname,

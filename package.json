@@ -20,7 +20,7 @@
     "prepack": "pnpm run build",
     "lint": "eslint .",
     "test": "pnpm vitest",
-    "build": "rollup --config=rollup.config.mjs",
+    "build": "rollup -c",
     "coverage": "vitest run --coverage"
   },
   "engines": {
@@ -31,18 +31,15 @@
     "@babel/preset-env": "^7.25.4",
     "@babel/preset-typescript": "^7.24.7",
     "@rollup/plugin-babel": "^6.0.4",
-    "@rollup/plugin-node-resolve": "^15.2.3",
     "@types/node": "^22.5.5",
     "@vitest/coverage-v8": "^2.1.1",
     "eslint": "^9.10.0",
     "eslint-plugin-vitest": "^0.5.4",
-    "globals": "^15.9.0",
     "happy-dom": "^15.7.4",
     "rollup": "^4.22.0",
     "rollup-plugin-dts": "^6.1.1",
     "typescript": "^5.6.2",
     "typescript-eslint": "^8.6.0",
-    "vite": "^5.4.6",
     "vitest": "^2.1.1"
   },
   "type": "module",
@@ -50,11 +47,5 @@
     "dist"
   ],
   "main": "./dist/signal-timers.cjs",
-  "module": "./dist/signal-timers.js",
-  "exports": {
-    ".": {
-      "import": "./dist/signal-timers.js",
-      "require": "./dist/signal-timers.cjs"
-    }
-  }
+  "module": "./dist/signal-timers.js"
 }
