@@ -84,6 +84,13 @@ describe('Support for signal in delayMicrotask', () => {
         await expect(delayToNextMicrotask({ signal: controller.signal })).rejects.toThrow()
     })
 
+    test('microtask should run normally without signal', async () => {
+        const trace = vi.fn()
+        microtask(trace)
+        await delayToNextMicrotask()
+        expect(trace).toBeCalled()
+    })
+
     test('If using microtask with signal, the callback should rise a AbortError.', async () => {
         const trace = vi.fn()
         const controller = new AbortController()
