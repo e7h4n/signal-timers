@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
-import { animationFrame, delay, interval, timeout } from "../";
+import { animationFrame, delay, delayToNextMicrotask, interval, microtask, timeout } from "../";
 
 describe('Support for signal in interval/timeout.', () => {
 
@@ -64,6 +64,41 @@ describe('Suupport for signal in requestAnimationFrame', () => {
         const trace = vi.fn()
         animationFrame(trace, { signal: AbortSignal.timeout(10) })
         await delay(20)
+        expect(trace).not.toBeCalled()
+    })
+})
+
+describe('Support for signal in delayMicrotask', () => {
+    test('If the signal is not aborted, the microtask can proceed normally.', async () => {
+        const trace = vi.fn()
+        await delayToNextMicrotask().then(trace)
+        expect(trace).toBeCalled()
+    })
+
+    test('If aborted during the microtask process, the promise will be immediately rejected.', async () => {
+        const controller = new AbortController()
+        queueMicrotask(() => {
+            controller.abort()
+        })
+
+        await expect(delayToNextMicrotask({ signal: controller.signal })).rejects.toThrow()
+    })
+
+    test('If using microtask with signal, the callback should rise a AbortError.', async () => {
+        const trace = vi.fn()
+        const controller = new AbortController()
+        queueMicrotask(() => {
+            controller.abort()
+        })
+
+        microtask(() => {
+            trace()
+        }, {
+            signal: controller.signal
+        })
+
+        await delayToNextMicrotask()
+
         expect(trace).not.toBeCalled()
     })
 })

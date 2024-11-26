@@ -16,13 +16,14 @@ This open-source library offers signal-aware control for timing functions. It al
 
 ## Installation
 
-Install the library using npm or yarn:
-
-```bash
+Install the library using npm or yarn:```bash
 npm install signal-timers
+
 # or
+
 yarn add signal-timers
-```
+
+````
 
 ## Usage
 
@@ -32,7 +33,7 @@ You can import the functions individually or all at once:
 
 ```typescript
 import { interval, timeout, delay, animationFrame } from 'signal-timers';
-```
+````
 
 ### interval
 
@@ -40,7 +41,7 @@ Create an interval timer that can be aborted with an AbortSignal.
 
 ```typescript
 const callback = () => {
-  console.log('Interval callback');
+  console.log("Interval callback");
 };
 
 const controller = new AbortController();
@@ -56,9 +57,13 @@ Set a timeout timer that can be aborted with an AbortSignal.
 
 ```typescript
 const controller = new AbortController();
-timeout(() => {
-  console.log('Timeout callback');
-}, 5000, { signal: controller.signal });
+timeout(
+  () => {
+    console.log("Timeout callback");
+  },
+  5000,
+  { signal: controller.signal }
+);
 
 // To abort the timeout
 controller.abort();
@@ -69,7 +74,7 @@ controller.abort();
 Create a promise-based delay that can be aborted with an AbortSignal.
 
 ```typescript
-await delay(5000, { signal: AbortSignal.timeout(1000) })
+await delay(5000, { signal: AbortSignal.timeout(1000) });
 
 // This line of code will not execute; the preceding line will be rejected after 1000ms, throwing an AbortError.
 ```
@@ -80,11 +85,34 @@ Set a animation frame callback that can be aborted with an AbortSignal.
 
 ```typescript
 const controller = new AbortController();
-animationFrame(() => {
-  console.log('animation callback');
-}, { signal: controller.signal });
+animationFrame(
+  () => {
+    console.log("animation callback");
+  },
+  { signal: controller.signal }
+);
 
 // To abort the timeout
+controller.abort();
+```
+
+### microtask
+
+Set a microtask callback that can be aborted with an AbortSignal.
+
+```typescript
+const controller = new AbortController();
+microtask(
+  () => {
+    console.log("microtask callback");
+  },
+  { signal: controller.signal }
+);
+
+// or using Promise style
+await delayToNextMicrotask({ signal: controller.signal });
+
+// To abort the microtask
 controller.abort();
 ```
 
@@ -111,6 +139,15 @@ controller.abort();
 
 - **ms**: The delay time in milliseconds.
 - **options.signal**: An optional AbortSignal to abort the delay.
+
+### `delayToNextMicrotask(options?)`
+
+- **options.signal**: An optional AbortSignal to abort the delay.
+
+### `microtask(callback, options?)`
+
+- **callback**: The callback function to execute.
+- **options.signal**: An optional AbortSignal to abort the microtask.
 
 ## License
 

@@ -84,6 +84,16 @@ export function timeout(callback: (args: void) => void, ms?: number, options?: T
     options?.signal?.addEventListener('abort', onAbort)
 }
 
+export function microtask(callback: () => unknown, options?: TimerOptions) {
+    queueMicrotask(function () {
+        if (options?.signal?.aborted) {
+            return
+        }
+
+        callback()
+    });
+}
+
 /**
  * Create a promise-based delay that can be aborted with an AbortSignal.
  *
@@ -134,4 +144,18 @@ export function animationFrame(callback: FrameRequestCallback, options?: TimerOp
     });
 
     options?.signal?.addEventListener('abort', onAbort)
+}
+
+/**
+ * Set a microtask callback that can be aborted with an AbortSignal.
+ * 
+ * @param callback The callback function to execute in next microtask.
+ * @param options An optional AbortSignal to abort the microtask callback.
+ */
+export function delayToNextMicrotask(options?: TimerOptions): Promise<void> {
+    return Promise.race([new Promise<void>(function (resolve) {
+        queueMicrotask(function () {
+            resolve()
+        })
+    }), promiseFromSignal(options?.signal)]) as Promise<void>
 }
