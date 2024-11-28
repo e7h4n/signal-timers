@@ -149,6 +149,33 @@ controller.abort();
 - **callback**: The callback function to execute.
 - **options.signal**: An optional AbortSignal to abort the microtask.
 
+## FAQ
+
+### Why not return timer id from `timeout` and `interval`?
+
+Using the return value from timeout/interval methods to cancel timers is a technique from before AbortSignal existed. Once you've decided to use AbortSignal, using timerId is no longer appropriate. It can also cause confusion - for example, if the timer is already executing, clearTimeout cannot prevent asynchronous code in the callback from running. Therefore, `signal-timers` chooses not to return a timerId. If you find yourself needing to use the timerId approach, you can try code like this:
+
+```typescript
+function myTimeout(callback, ms, { signal }) {
+  const ctrl = new AbortController();
+  timeout(callback, ms, { signal: AbortSignal.any(signal, ctrl.signal) });
+  return () => {
+    ctrl.abort();
+  };
+}
+
+const clearTimer = myTimeout(
+  () => {
+    // ...
+  },
+  1000,
+  { signal }
+);
+
+// ...
+clearTimer();
+```
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
