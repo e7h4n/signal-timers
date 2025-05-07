@@ -16,13 +16,14 @@ This open-source library offers signal-aware control for timing functions. It al
 
 ## Installation
 
-Install the library using npm or yarn:```bash
+Install the library using npm or yarn:
+
+```bash
 npm install signal-timers
 
 # or
 
 yarn add signal-timers
-
 ````
 
 ## Usage
