@@ -11,6 +11,20 @@ describe('Support for signal in interval/timeout.', () => {
         expect(trace).toBeCalledTimes(9)
     })
 
+    test('The timeout executes once when the signal is not aborted.', async () => {
+        const controller = new AbortController()
+        const trace = vi.fn()
+
+        await new Promise<void>((resolve) => {
+            timeout(() => {
+                trace()
+                resolve()
+            }, 0, { signal: controller.signal })
+        })
+
+        expect(trace).toHaveBeenCalledOnce()
+    })
+
     test('The timeout can be canceled by the signal.', async () => {
         const trace = vi.fn()
         timeout(trace, 10, { signal: AbortSignal.timeout(5) })
