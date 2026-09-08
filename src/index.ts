@@ -7,14 +7,6 @@ class AbortError extends Error {
     }
 }
 
-function promiseFromSignal(signal?: AbortSignal) {
-    return new Promise((_, reject) => {
-        signal?.addEventListener('abort', () => {
-            reject(new AbortError(signal.reason as (string | undefined)))
-        })
-    })
-}
-
 interface TimerOptions {
     signal?: AbortSignal
 }
@@ -108,11 +100,23 @@ export function microtask(callback: () => unknown, options?: TimerOptions) {
  * @returns a promise resolved after ms.
  */
 export function delay(ms: number, options?: TimerOptions): Promise<void> {
-    return Promise.race([new Promise<void>(function (resolve) {
-        timeout(function () {
+    return new Promise<void>(function (resolve, reject) {
+        const signal = options?.signal
+        signal?.throwIfAborted()
+
+        function onAbort() {
+            clearTimeout(timer)
+            signal?.removeEventListener('abort', onAbort)
+            reject(new AbortError(signal?.reason as (string | undefined)))
+        }
+
+        const timer = setTimeout(function () {
+            signal?.removeEventListener('abort', onAbort)
             resolve()
-        }, ms, options)
-    }), promiseFromSignal(options?.signal)]) as Promise<void>
+        }, ms)
+
+        signal?.addEventListener('abort', onAbort, { once: true })
+    })
 }
 
 /**
@@ -153,9 +157,19 @@ export function animationFrame(callback: FrameRequestCallback, options?: TimerOp
  * @param options An optional AbortSignal to abort the microtask callback.
  */
 export function delayToNextMicrotask(options?: TimerOptions): Promise<void> {
-    return Promise.race([new Promise<void>(function (resolve) {
+    return new Promise<void>(function (resolve, reject) {
+        const signal = options?.signal
+
+        function onAbort() {
+            signal?.removeEventListener('abort', onAbort)
+            reject(new AbortError(signal?.reason as (string | undefined)))
+        }
+
         queueMicrotask(function () {
+            signal?.removeEventListener('abort', onAbort)
             resolve()
         })
-    }), promiseFromSignal(options?.signal)]) as Promise<void>
+
+        signal?.addEventListener('abort', onAbort, { once: true })
+    })
 }
